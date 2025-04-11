@@ -6,6 +6,7 @@ import os
 import wandb
 import hydra
 from omegaconf import DictConfig
+import pathlib
 
 _steps = [
     "download",
@@ -52,7 +53,7 @@ def go(config: DictConfig):
 
         if "basic_cleaning" in active_steps:
             _ = mlflow.run(
-                os.path.abspath("src/basic_cleaning"),
+                str(pathlib.Path("src/basic_cleaning").resolve()),  # Absolute path
                 "main",
                 parameters={
                     "input_artifact": "sample.csv:latest",
